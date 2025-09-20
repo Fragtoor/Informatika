@@ -1,6 +1,9 @@
 from math import factorial
 
 def fact_ten(num):
+    """
+    Переводит число в факториальной СС в десятичное число
+    """
     res = 0
     for i in range(len(num)):
         res += int(num[i]) * factorial(len(num) - i)
@@ -9,7 +12,7 @@ def fact_ten(num):
 
 def ten_fact(num):
     """
-    Более простая реализация преобразования в факториальную систему.
+    Переводит число из десятичной CC в факториальную
     """
     if num == 0:
         return "0"
@@ -22,8 +25,6 @@ def ten_fact(num):
         remainder = num % divisor
         digits.append(str(remainder))
         num //= divisor
-    
-    # Переворачиваем цифры (младшие разряды сначала)
     return ''.join(reversed(digits))
 
 
@@ -40,7 +41,7 @@ def fib_ten(num):
 
 def ten_fib(num):
     """
-    Переводит число из десятичной системы счисления в фибоначиеву
+    Переводит число из десятичной CC в фибоначиеву
     """
     if num == 0:
         return "0"
@@ -64,7 +65,6 @@ def ten_fib(num):
         else:
             result_digits.append('0')
     
-    # Убираем лидирующие нули
     result_str = ''.join(result_digits).lstrip('0')
     
     return result_str if result_str else "0"
@@ -72,21 +72,17 @@ def ten_fib(num):
 
 def ten_begrman(num):
     """
-    Переводит десятичное число в систему счисления Бергмана (на основе золотого сечения).
+    Переводит десятичное число в CC Бергмана.
     """
-    # Золотое сечение
     phi = (1 + 5**0.5) / 2
     
-    # Определяем диапазон степеней
     max_power = 0
     while phi**max_power <= num:
         max_power += 1
     
-    # Начинаем со старшей степени
     result_digits = []
     remainder = num
     
-    # Обрабатываем целую часть (положительные степени)
     for power in range(max_power, -1, -1):
         current_value = phi**power
         
@@ -96,10 +92,8 @@ def ten_begrman(num):
         else:
             result_digits.append('0')
     
-    # Добавляем точку для дробной части
     result_digits.append('.')
     
-    # Обрабатываем дробную часть (отрицательные степени)
     for power in range(-1, -11, -1):
         current_value = phi**power
         
@@ -109,13 +103,11 @@ def ten_begrman(num):
         else:
             result_digits.append('0')
         
-        if abs(remainder) < 1e-10:  # Малая величина для остановки
+        if abs(remainder) < 1e-10:
             break
     
-    # Форматируем результат
     bergman_str = ''.join(result_digits)
     
-    # Убираем лидирующие нули и лишние хвостовые нули
     bergman_str = bergman_str.rstrip('0').rstrip('.')
     if bergman_str.startswith('.'):
         bergman_str = '0' + bergman_str
@@ -125,11 +117,10 @@ def ten_begrman(num):
 
 def bergman_ten(num):
     """
-    Конвертирует число из системы счисления Бергмана в десятичную систему.
+    Переводит число из СС Бергмана в десятичную СС.
     """
     phi = (1 + 5**0.5) / 2
     
-    # Разделяем на целую и дробную части
     if '.' in num:
         integer_part, fractional_part = num.split('.')
     else:
@@ -137,15 +128,13 @@ def bergman_ten(num):
     
     result = 0.0
     
-    # Обрабатываем целую часть (положительные степени)
     for i, digit in enumerate(integer_part):
-        power = len(integer_part) - i - 1  # Степень уменьшается слева направо
+        power = len(integer_part) - i - 1
         if digit == '1':
             result += phi ** power
     
-    # Обрабатываем дробную часть (отрицательные степени φ)
     for i, digit in enumerate(fractional_part):
-        power = -(i + 1)  # Степени: -1, -2, -3, ...
+        power = -(i + 1)
         if digit == '1':
             result += phi ** power
     
@@ -153,6 +142,7 @@ def bergman_ten(num):
 
  
 def ten_CC(num, cc1):
+    """Переводит число из десятичной CC в позиционную CC"""
     res = ''
     ost = '0123456789ABCDEF'
     num2int = int(str(float(str(num))).split('.')[0])
@@ -178,7 +168,7 @@ def ten_CC(num, cc1):
 
 
 def CC_ten(num, cc1):
-    """Переводит число из одной позиционной в десятичную"""
+    """Переводит число из одной позиционной CC в десятичную CC"""
     num1 = num
     if '.' not in num1:
         num1 += '.0'
@@ -192,28 +182,6 @@ def CC_ten(num, cc1):
     num2 = int(num2int) + num2float
     return float(str(num2))
 
-
-def is_number(s):
-    try:
-        float(s)  # Пробуем преобразовать в float
-        return True
-    except ValueError:
-        return False
-
-def is_integer(s):
-    try:
-        int(s)  # Пробуем преобразовать в int
-        return True
-    except ValueError:
-        return False
-
-def check_number_type(s):
-    if is_integer(s):
-        return "Целое число"
-    elif is_number(s):
-        return "Дробное число"
-    else:
-        return "Не число"
     
 def identify_CC(cc):
     """Определяет, какую CC ввёл пользователь"""
@@ -238,9 +206,7 @@ def identify_CC(cc):
 
 
 number = input("Введите число: ")
-# if check_number_type(number) == "Не число":
-#     print("Нужно вводить целое и дробное число")
-#     exit()
+
 print(
 """
 Доступные CC: 
