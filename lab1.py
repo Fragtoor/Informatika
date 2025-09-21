@@ -2,10 +2,13 @@ from math import factorial
 
 def fact_ten(num):
     """
-    Переводит число в факториальной СС в десятичное число
+    Переводит число из факториальной СС в десятичное число
     """
     res = 0
     for i in range(len(num)):
+        if int(num[i]) > i + 1:
+            print("ОШИБКА")
+            exit()
         res += int(num[i]) * factorial(len(num) - i)
     return res
 
@@ -33,6 +36,9 @@ def fib_ten(num):
     Переводит число в фибоначиевой СС в десятичное число
     """
     fib = [1, 2]
+    if '11' in num:
+        print('ОШИБКА')
+        exit()
     for i in range(50):
         fib.append(fib[i] + fib[i+1])
     res = sum([int(num[i]) * fib[len(num) - i-1] for i in range(len(num))])
@@ -120,7 +126,9 @@ def bergman_ten(num):
     Переводит число из СС Бергмана в десятичную СС.
     """
     phi = (1 + 5**0.5) / 2
-    
+    if '11' in num:
+        print('ОШИБКА')
+        exit()
     if '.' in num:
         integer_part, fractional_part = num.split('.')
     else:
@@ -249,3 +257,4 @@ elif cc2 == 'Ф':
     N2 = ten_fact(N1)
 
 print(f'{number} ({cc1})-> {N2} ({cc2})')
+
